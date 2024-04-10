@@ -1,0 +1,15 @@
+:root {
+    --colour1: #E3E4DB;
+    --colour2: #CDCDCD;
+    --colour3: #AEA4BF;
+    --colour4: #8F6593;
+    --colour5: #3B252C;
+}
+
+body {
+    color: var(--colour1);
+    background-color: var(--colour4);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    text-align: center;
+    width: 90vw;
+}

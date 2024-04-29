@@ -1,7 +1,6 @@
 <script lang="ts">
   import PoemSkeleton from "$lib/components/PoemSkeleton.svelte";
   import StructureInfo from "$lib/components/StructureInfo.svelte";
-  import { onMount } from "svelte";
 
   let poemTypeId: string;
   let showModal: boolean = false;

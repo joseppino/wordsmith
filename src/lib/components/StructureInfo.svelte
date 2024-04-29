@@ -1,33 +1,24 @@
 <script lang="ts">
   import Modal from "./Modal.svelte";
   import structureSummaries from "$lib/ts/structureSummaries";
+  import lookupPoemId from "$lib/ts/lookupPoemId";
+  import capitaliseLeadChar from "$lib/ts/capitaliseLeadChar";
 
-  export let showModal: boolean = false;
+  export let showModal: boolean;
+  export let poemTypeId: string;
+  $: poemTypeName = lookupPoemId(poemTypeId);
+
 </script>
 
-{#if showModal}
-  <Modal bind:showModal>
-    <h2 slot="header">
-      modal
-      <small><em>adjective</em> mod·al \ˈmō-dəl\</small>
-    </h2>
+<Modal bind:showModal>
+  <h2 slot="header">
+    {capitaliseLeadChar(poemTypeName)}
+  </h2>
 
-    <ol class="definition-list">
-      <li>of or relating to modality in logic</li>
-      <li>
-        containing provisions as to the mode of procedure or the manner of taking effect —used of a
-        contract or legacy
-      </li>
-      <li>of or relating to a musical mode</li>
-      <li>of or relating to structure as opposed to substance</li>
-      <li>
-        of, relating to, or constituting a grammatical form or category characteristically indicating
-        predication
-      </li>
-      <li>of or relating to a statistical mode</li>
-    </ol>
+  <p>
+    {structureSummaries[poemTypeName]}
+  </p>
 
-    <a href="https://www.merriam-webster.com/dictionary/modal">merriam-webster.com</a>
+  <a href={`https://www.dictionary.com/browse/${poemTypeName}`}>Definition</a>
 
-  </Modal>
-{/if}
+</Modal>

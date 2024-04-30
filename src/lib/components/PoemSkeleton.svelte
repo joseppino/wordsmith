@@ -4,9 +4,6 @@
   export let poemTypeId: string;
   let numLines: number = 0;
   let rhymeScheme: string = "";
-
-  $: console.log("poemTypeId: " + poemTypeId);
-  $: console.log("numLines " + numLines);
   
   $: if(poemTypeId) {
     switch(poemTypeId) {

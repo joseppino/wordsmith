@@ -1,11 +1,16 @@
 <script lang="ts">
+  import countSyllables from "$lib/ts/countSyllables";
+
   export let rhymeChar: string = "";
 
-  
+  let lineInput: HTMLInputElement;
+  // $: syllablesInLine = lineInput.innerText.split(" ").forEach(word => {
+  //   countSyllables(word)
+  // });
 </script>
 
 <div class="line">
-  <input class="line-input" type="text">
+  <input class="line-input" type="text" bind:this={lineInput}>
   {#if rhymeChar}
     <span>{rhymeChar}</span>
   {/if}

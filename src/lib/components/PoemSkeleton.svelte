@@ -2,7 +2,7 @@
   import Line from "./Line.svelte";
 
   export let poemTypeId: string;
-  let numLines: number = 0;
+  export let numLines: number = 0;
   let rhymeScheme: string = "";
   
   $: if(poemTypeId) {

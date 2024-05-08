@@ -7,6 +7,9 @@
 
   let testStr: string;
   let infoBtn: HTMLButtonElement;
+  let acrosticLettersInputVal: string;
+  let acrosticConfirmed: boolean = false;
+  let acrosticLetters: string;
 </script>
 
 <main>
@@ -25,7 +28,16 @@
     <button on:click={() => {showModal = true}} bind:this={infoBtn} disabled><i class="fa-solid fa-circle-info" /></button>
     <StructureInfo bind:showModal={showModal} {poemTypeId}/>
   </div>
-  <PoemSkeleton {poemTypeId}/>
+  {#if poemTypeId !== "6"}
+    <PoemSkeleton {poemTypeId}/>
+  {:else}
+    <label for="acrostic-letter-choices">Letters for Acrostic:</label>
+    <input type="text" name="acrostic-letter-choices" bind:value={acrosticLettersInputVal}>
+    <button on:click={() => acrosticLetters = acrosticLettersInputVal.trim().toUpperCase()}>Confirm</button>
+    {#if acrosticConfirmed}
+      <PoemSkeleton {poemTypeId} numLines={acrosticLetters.length} />
+    {/if}
+  {/if}
   <br>
   <input placeholder="Give me a word" type="text" bind:value={testStr}>
   <button on:click={async () => {

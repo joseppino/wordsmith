@@ -5,8 +5,6 @@
   let poemTypeId: string;
   let showModal: boolean = false;
 
-  $: console.log(showModal);
-
   let testStr: string;
   let infoBtn: HTMLButtonElement;
 </script>

@@ -1,6 +1,7 @@
 <script lang="ts">
   import countSyllables from "$lib/ts/countSyllables";
 
+  export let acrosticChar: string = "";
   export let rhymeChar: string = "";
 
   let lineInput: HTMLInputElement;
@@ -10,6 +11,9 @@
 </script>
 
 <div class="line">
+  {#if acrosticChar}
+    <span>{acrosticChar}</span>
+  {/if}
   <input class="line-input" type="text" bind:this={lineInput}>
   {#if rhymeChar}
     <span>{rhymeChar}</span>

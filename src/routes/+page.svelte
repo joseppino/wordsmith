@@ -1,6 +1,11 @@
 <script lang="ts">
+  // COMPONENT IMPORTS
   import PoemSkeleton from "$lib/components/PoemSkeleton.svelte";
   import StructureInfo from "$lib/components/StructureInfo.svelte";
+  // LIBRARY IMPORTS
+  import toast, { Toaster } from "svelte-french-toast";
+
+  const MAX_ACROSTIC_LENGTH: number = 16;
 
   let poemTypeId: string;
   let showModal: boolean = false;
@@ -8,8 +13,20 @@
   let testStr: string;
   let infoBtn: HTMLButtonElement;
   let acrosticLettersInputVal: string;
-  let acrosticConfirmed: boolean = false;
-  let acrosticLetters: string;
+  let acrosticLetters: string = "";
+
+  function validateAcrostic() {
+    if(acrosticLettersInputVal) {
+      if (/[^A-Za-z0-9]/.test(acrosticLettersInputVal)) {
+        toast.error(`Only letters and numbers allowed in the acrostic.`);
+      }
+      else if (acrosticLettersInputVal.length > MAX_ACROSTIC_LENGTH) {
+        toast.error(`Maximum acrostic length is ${MAX_ACROSTIC_LENGTH} characters.`);
+      } else {
+        acrosticLetters = acrosticLettersInputVal.trim().toUpperCase();
+      }
+    }
+  }
 </script>
 
 <main>
@@ -33,9 +50,9 @@
   {:else}
     <label for="acrostic-letter-choices">Letters for Acrostic:</label>
     <input type="text" name="acrostic-letter-choices" bind:value={acrosticLettersInputVal}>
-    <button on:click={() => acrosticLetters = acrosticLettersInputVal.trim().toUpperCase()}>Confirm</button>
-    {#if acrosticConfirmed}
-      <PoemSkeleton {poemTypeId} numLines={acrosticLetters.length} />
+    <button on:click={validateAcrostic}>Confirm</button>
+    {#if acrosticLetters}
+      <PoemSkeleton poemTypeId={poemTypeId} acrostic={acrosticLetters} />
     {/if}
   {/if}
   <br>
@@ -44,7 +61,11 @@
     const json = await (await fetch(`/api/rhyme/${testStr}`)).json()
     console.log(json);
   }}>Find me a rhyme</button>
+  <p>Share Poem on:</p>
+  <button>X</button>
+  <button>Embed</button>
 </main>
+<Toaster />
 
 <style>
   main {

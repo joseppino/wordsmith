@@ -2,7 +2,8 @@
   import Line from "./Line.svelte";
 
   export let poemTypeId: string;
-  export let numLines: number = 0;
+  export let acrostic: string = "";
+  let numLines: number;
   let rhymeScheme: string = "";
   
   $: if(poemTypeId) {
@@ -23,6 +24,9 @@
         break;
       case "5":
         setVillanelle();
+        break;
+      case "6":
+        setAcrostic();
         break;
       default:
         break;
@@ -53,6 +57,11 @@
     numLines = 19;
     rhymeScheme = "ABA ABA ABA ABA ABA ABAA";
   }
+
+  function setAcrostic() {
+    numLines = 0;
+    rhymeScheme = "";
+  }
   
 </script>
 
@@ -70,7 +79,12 @@
   <!-- Fallback for structures without a rhyme scheme e.g. Haiku -->
   {:else if !rhymeScheme && numLines > 0}
     {#each {length: numLines} as _}
-        <Line />
+      <Line />
+    {/each}
+  <!-- Case of Acrostic -->
+  {:else if poemTypeId === "6"}
+    {#each acrostic as acrosticChar}
+      <Line {acrosticChar}/>
     {/each}
   {/if}
 </div>

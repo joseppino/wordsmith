@@ -47,6 +47,7 @@
   </div>
   {#if poemTypeId !== "6"}
     <PoemSkeleton {poemTypeId}/>
+  <!-- If acrostic poem -->
   {:else}
     <label for="acrostic-letter-choices">Letters for Acrostic:</label>
     <input type="text" name="acrostic-letter-choices" bind:value={acrosticLettersInputVal}>

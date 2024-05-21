@@ -76,4 +76,8 @@
   h1 {
     color: var(--colour1);
   }
+
+  select {
+    text-align: center;
+  }
 </style>

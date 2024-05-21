@@ -35,7 +35,7 @@
   
   function setHaiku() {
     numLines = 3;
-    rhymeScheme = ""
+    rhymeScheme = "";
   }
 
   function setEnglishSonnet() {
@@ -71,7 +71,14 @@
     {#each rhymeScheme as rhyme}
       <!--  Account for spaces which will mark the end of a stanza -->
       {#if rhyme != " "}
-        <Line rhymeChar={rhyme}/>
+        <Line lineProps={
+          { 
+            rhymeChar: rhyme,
+            doCountSyllables: false,
+            acrosticChar : "",
+            centraliseText: false
+          }
+         }/>
       {:else}
         <br>
       {/if}
@@ -79,12 +86,26 @@
   <!-- Fallback for structures without a rhyme scheme e.g. Haiku -->
   {:else if !rhymeScheme && numLines > 0}
     {#each {length: numLines} as _}
-      <Line />
+      <Line lineProps={
+        { 
+          rhymeChar: "",
+          doCountSyllables: true,
+          acrosticChar : "",
+          centraliseText: true
+        }
+      }/>
     {/each}
   <!-- Case of Acrostic -->
   {:else if poemTypeId === "6"}
     {#each acrostic as acrosticChar}
-      <Line {acrosticChar}/>
+      <Line lineProps={
+        { 
+          rhymeChar: "",
+          doCountSyllables: false,
+          acrosticChar : acrosticChar,
+          centraliseText: false
+        }
+      }/>
     {/each}
   {/if}
 </div>

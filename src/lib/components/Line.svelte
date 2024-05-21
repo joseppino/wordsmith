@@ -1,23 +1,19 @@
 <script lang="ts">
   import countSyllables from "$lib/ts/countSyllables";
 
-  export let acrosticChar: string = "";
-  export let rhymeChar: string = "";
-  export let doCountSyllables: boolean = false;
+  export let lineProps;
 
-  let lineInput: HTMLInputElement;
-  // $: syllablesInLine = lineInput.innerText.split(" ").forEach(word => {
-  //   countSyllables(word)
-  // });
-
+  let lineText: string = "";
+  let syllablesInLineCount: number = 0;
+  
   function handleKeyUp() {
-
+    syllablesInLineCount = evaluateSyllablesInLine();
   }
 
   function evaluateSyllablesInLine() {
     let sylCount = 0;
-    let wordsInLine = lineInput.innerText.split(" ");
-    for(let word in wordsInLine) {
+    let wordsInLine = lineText.split(" ");
+    for(let word of wordsInLine) {
       sylCount += countSyllables(word);
     }
     return sylCount;
@@ -25,13 +21,19 @@
 </script>
 
 <div class="line">
-  {#if acrosticChar}
-    <span>{acrosticChar}</span>
+  {#if lineProps.acrosticChar}
+    <span>{lineProps.acrosticChar}</span>
   {/if}
-  <input class="line-input" type="text" bind:this={lineInput} on:keyup={handleKeyUp}>
-  {#if rhymeChar}
-    <span>{rhymeChar}</span>
+  <input class="line-input" type="text"
+  bind:value={lineText}
+  on:keyup={handleKeyUp}
+  style={lineProps.centraliseText ? "text-align: center" : ""}>
+  {#if lineProps.rhymeChar}
+    <span>{lineProps.rhymeChar}</span>
+  {:else if lineProps.doCountSyllables}
+    <span>{syllablesInLineCount}</span>
   {/if}
+  
 </div>
 
 <style>

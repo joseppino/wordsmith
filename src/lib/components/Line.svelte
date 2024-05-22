@@ -1,5 +1,6 @@
 <script lang="ts">
   import countSyllables from "$lib/ts/countSyllables";
+  import { syllable } from "syllable";
 
   export let lineProps;
 
@@ -14,7 +15,7 @@
     let sylCount = 0;
     let wordsInLine = lineText.split(" ");
     for(let word of wordsInLine) {
-      sylCount += countSyllables(word);
+      sylCount += syllable(word);
     }
     return sylCount;
   }

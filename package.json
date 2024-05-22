@@ -21,6 +21,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"svelte-french-toast": "^1.2.0"
+		"svelte-french-toast": "^1.2.0",
+		"syllable": "^5.0.1"
 	}
 }

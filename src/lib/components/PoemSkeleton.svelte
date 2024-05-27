@@ -3,6 +3,7 @@
 
   export let poemTypeId: string;
   export let acrostic: string = "";
+  export let countSyllables: boolean = false;
   let numLines: number;
   let rhymeScheme: string = "";
   
@@ -36,6 +37,7 @@
   function setHaiku() {
     numLines = 3;
     rhymeScheme = "";
+    countSyllables = true;
   }
 
   function setEnglishSonnet() {
@@ -74,7 +76,7 @@
         <Line lineProps={
           { 
             rhymeChar: rhyme,
-            doCountSyllables: false,
+            doCountSyllables: countSyllables,
             acrosticChar : "",
             centraliseText: false
           }
@@ -89,7 +91,7 @@
       <Line lineProps={
         { 
           rhymeChar: "",
-          doCountSyllables: true,
+          doCountSyllables: countSyllables,
           acrosticChar : "",
           centraliseText: true
         }
@@ -101,7 +103,7 @@
       <Line lineProps={
         { 
           rhymeChar: "",
-          doCountSyllables: false,
+          doCountSyllables: countSyllables,
           acrosticChar : acrosticChar,
           centraliseText: false
         }

@@ -14,6 +14,7 @@
   let infoBtn: HTMLButtonElement;
   let acrosticLettersInputVal: string;
   let acrosticLetters: string = "";
+  let countSyllables: boolean = false;
 
   function validateAcrostic() {
     if(acrosticLettersInputVal) {
@@ -33,7 +34,18 @@
   <h1>Wordsmith</h1>
   <!-- Select value is equivalent to Poem Type ID -->
   <div class="pselect-container">
-    <select name="select-poem-type" id="select-poem-type" bind:value={poemTypeId} on:change={() => infoBtn.disabled = false}>
+    <select name="select-poem-type" id="select-poem-type" bind:value={poemTypeId}
+    on:change={() => {
+      infoBtn.disabled = false;
+      // reset poem lines on type change
+      document.querySelectorAll("input").forEach(el => {
+        el.value = "";
+      });
+      document.querySelectorAll(".syllable-counter").forEach(el => {
+        el.innerHTML = "0";
+      });
+    }}
+    >
         <option selected disabled value="0">Poem Type</option>
         <option value="1">Haiku</option>
         <option value="2">English Sonnet</option>
@@ -45,15 +57,19 @@
     <button on:click={() => {showModal = true}} bind:this={infoBtn} disabled><i class="fa-solid fa-circle-info" /></button>
     <StructureInfo bind:showModal={showModal} {poemTypeId}/>
   </div>
+  <div>
+    <label for="countsyls-checkbox">Count Syllables?</label>
+    <input type="checkbox" name="countsyls-checkbox" id="countsyls-checkbox" bind:checked={countSyllables} on:change={() => console.log(countSyllables)}>
+  </div>
   {#if poemTypeId !== "6"}
-    <PoemSkeleton {poemTypeId}/>
+    <PoemSkeleton {poemTypeId} bind:countSyllables={countSyllables} />
   <!-- If acrostic poem -->
   {:else}
     <label for="acrostic-letter-choices">Letters for Acrostic:</label>
     <input type="text" name="acrostic-letter-choices" bind:value={acrosticLettersInputVal}>
     <button on:click={validateAcrostic}>Confirm</button>
     {#if acrosticLetters}
-      <PoemSkeleton poemTypeId={poemTypeId} acrostic={acrosticLetters} />
+      <PoemSkeleton poemTypeId={poemTypeId} acrostic={acrosticLetters} bind:countSyllables={countSyllables}/>
     {/if}
   {/if}
   <br>

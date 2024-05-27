@@ -22,22 +22,36 @@
 </script>
 
 <div class="line">
+  <span>
   {#if lineProps.acrosticChar}
     <span>{lineProps.acrosticChar}</span>
   {/if}
-  <input class="line-input" type="text"
-  bind:value={lineText}
-  on:keyup={handleKeyUp}
-  style={lineProps.centraliseText ? "text-align: center" : ""}>
-  {#if lineProps.rhymeChar}
-    <span>{lineProps.rhymeChar}</span>
-  {:else if lineProps.doCountSyllables}
-    <span>{syllablesInLineCount}</span>
-  {/if}
-  
+    <input class="line-input" type="text"
+    bind:value={lineText}
+    on:keyup={handleKeyUp}
+    style={lineProps.centraliseText ? "text-align: center" : ""}>
+    {#if lineProps.rhymeChar}
+      <span>{lineProps.rhymeChar}</span>
+    {/if}
+    {#if lineProps.doCountSyllables}
+      <span class="syllable-counter">{syllablesInLineCount}</span>
+    {/if}
+  </span>
+    <div class="rhyme-suggestions">
+      <span>Rhyme</span>
+      <span>Rhyme</span>
+      <span>Rhyme</span>
+      <button><i class="fa-solid fa-arrows-rotate"></i></button>
+    </div>
 </div>
 
 <style>
+  .line {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
   .line-input {
     border: 0;
     outline: 0;
@@ -56,10 +70,11 @@
       width: 250px;
     }
   }
-
-  @media screen and (max-width: 600px) {
-    .line-input {
-      width: 250px;
-    }
+  .rhyme-suggestions {
+    max-width: 700px;
+    width: 60%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
   }
 </style>

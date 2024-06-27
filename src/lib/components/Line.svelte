@@ -37,12 +37,6 @@
       <span class="syllable-counter">{syllablesInLineCount}</span>
     {/if}
   </span>
-    <div class="rhyme-suggestions">
-      <span>Rhyme</span>
-      <span>Rhyme</span>
-      <span>Rhyme</span>
-      <button><i class="fa-solid fa-arrows-rotate"></i></button>
-    </div>
 </div>
 
 <style>

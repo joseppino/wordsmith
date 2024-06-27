@@ -1,24 +1,21 @@
 <script lang="ts">
   import Modal from "./Modal.svelte";
   import structureSummaries from "$lib/ts/structureSummaries";
-  import lookupPoemId from "$lib/ts/lookupPoemId";
-  import capitaliseLeadChar from "$lib/ts/capitaliseLeadChar";
 
   export let showModal: boolean;
   export let poemTypeId: string;
-  $: poemTypeName = lookupPoemId(poemTypeId);
 
 </script>
 
 <Modal bind:showModal>
   <h2 slot="header">
-    {capitaliseLeadChar(poemTypeName)}
+    {structureSummaries[poemTypeId]["name"]}
   </h2>
 
   <p>
-    {structureSummaries[poemTypeName]}
+    {structureSummaries[poemTypeId]["summary"]}
   </p>
 
-  <a href={`https://www.dictionary.com/browse/${poemTypeName}`}>Definition</a>
+  <a href={`https://www.dictionary.com/browse/${structureSummaries[poemTypeId]["name"].toLowerCase()}`}>Definition</a>
 
 </Modal>

@@ -33,54 +33,58 @@
 <main>
   <h1>Wordsmith</h1>
   <!-- Select value is equivalent to Poem Type ID -->
-  <div class="pselect-container">
-    <select name="select-poem-type" id="select-poem-type" bind:value={poemTypeId}
-    on:change={() => {
-      infoBtn.disabled = false;
-      // reset poem lines on type change
-      document.querySelectorAll("input").forEach(el => {
-        el.value = "";
-      });
-      document.querySelectorAll(".syllable-counter").forEach(el => {
-        el.innerHTML = "0";
-      });
-    }}
-    >
-        <option selected disabled value="0">Poem Type</option>
-        <option value="1">Haiku</option>
-        <option value="2">English Sonnet</option>
-        <option value="3">Italian Sonnet</option>
-        <option value="4">Limerick</option>
-        <option value="5">Villanelle</option>
-        <option value="6">Acrostic</option>
-    </select>
-    <button on:click={() => {showModal = true}} bind:this={infoBtn} disabled><i class="fa-solid fa-circle-info" /></button>
-    <StructureInfo bind:showModal={showModal} {poemTypeId}/>
-  </div>
-  <div>
-    <label for="countsyls-checkbox">Count Syllables?</label>
-    <input type="checkbox" name="countsyls-checkbox" id="countsyls-checkbox" bind:checked={countSyllables} on:change={() => console.log(countSyllables)}>
-  </div>
+  <form class="pure-form">
+    <fieldset>
+      <div class="pselect-container">
+        <select name="select-poem-type" id="select-poem-type" bind:value={poemTypeId}
+        on:change={() => {
+          infoBtn.disabled = false;
+          // reset poem lines on type change
+          document.querySelectorAll("input").forEach(el => {
+            el.value = "";
+          });
+          document.querySelectorAll(".syllable-counter").forEach(el => {
+            el.innerHTML = "0";
+          });
+        }}
+        >
+            <option selected disabled value="0">Poem Type</option>
+            <option value="1">Haiku</option>
+            <option value="2">English Sonnet</option>
+            <option value="3">Italian Sonnet</option>
+            <option value="4">Limerick</option>
+            <option value="5">Villanelle</option>
+            <option value="6">Acrostic</option>
+        </select>
+        <button type="button" on:click={() => {showModal = true}} bind:this={infoBtn} disabled><i class="fa-solid fa-circle-info" /></button>
+        <StructureInfo bind:showModal={showModal} {poemTypeId}/>
+      </div>
+      <div>
+        <label for="countsyls-checkbox">Count Syllables?</label>
+        <input type="checkbox" name="countsyls-checkbox" id="countsyls-checkbox" bind:checked={countSyllables} on:change={() => console.log(countSyllables)}>
+      </div>
+  </fieldset>
+  </form>
   {#if poemTypeId !== "6"}
     <PoemSkeleton {poemTypeId} bind:countSyllables={countSyllables} />
   <!-- If acrostic poem -->
   {:else}
     <label for="acrostic-letter-choices">Letters for Acrostic:</label>
     <input type="text" name="acrostic-letter-choices" bind:value={acrosticLettersInputVal}>
-    <button on:click={validateAcrostic}>Confirm</button>
+    <button type="button" class="pure-button" on:click={validateAcrostic}>Confirm</button>
     {#if acrosticLetters}
       <PoemSkeleton poemTypeId={poemTypeId} acrostic={acrosticLetters} bind:countSyllables={countSyllables}/>
     {/if}
   {/if}
   <br>
   <input placeholder="Give me a word" type="text" bind:value={testStr}>
-  <button on:click={async () => {
+  <button type="button" class="pure-button" on:click={async () => {
     const json = await (await fetch(`/api/rhyme/${testStr}`)).json()
     console.log(json);
   }}>Find me a rhyme</button>
-  <p>Share Poem on:</p>
-  <button>X</button>
-  <button>Embed</button>
+  <p>Export Poem as:</p>
+  <button type="button" class="pure-button">Text</button>
+  <button type="button" class="pure-button">HTML</button>
 </main>
 <Toaster />
 
@@ -93,7 +97,7 @@
     color: var(--colour1);
   }
 
-  select {
+  /* select {
     text-align: center;
-  }
+  } */
 </style>
